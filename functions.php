@@ -438,7 +438,16 @@
 		wp_add_dashboard_widget('example_dashboard_widget', '云聪智能全网营销平台', 'customWp_dashboard_widget_function');
 	}
 	function customWp_admin_css() {
-	    wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/admin.css' );
+	    /* wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/admin.css' ); */
+wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/bar-menu.css' );
+
+	}
+	function remove_store() {
+		global $wp_admin_bar;
+		
+		$wp_admin_bar->remove_node( 'wp-logo' );
+		$wp_admin_bar->remove_node( 'view-site' );
+		$wp_admin_bar->remove_node( 'view-store' );
 	}
 	remove_action('admin_init', '_maybe_update_core');
 	remove_action('admin_init', '_maybe_update_plugins');
@@ -455,6 +464,7 @@
 	//add_action('wp_enqueue_scripts', 'customWp_replace_open_sans' );
 	//add_action('admin_enqueue_scripts', 'customWp_replace_open_sans');
 	add_action('admin_head', 'customWp_admin_css');
+	add_action('admin_bar_menu', 'remove_store', 999);
 	add_action('admin_menu','customWp_remove_my_post_metaboxes');
 	//add_action('admin_menu', 'customWp_all_settings_link');
 	add_action('init', 'customWp_disable_emojis' );
