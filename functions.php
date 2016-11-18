@@ -438,7 +438,55 @@
 		wp_add_dashboard_widget('example_dashboard_widget', '云聪智能全网营销平台', 'customWp_dashboard_widget_function');
 	}
 	function customWp_admin_css() {
-	    wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/admin.css' );
+	    /* wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/admin.css' ); */
+wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/bar-menu.css' );
+
+	}
+	function remove_store() {
+		global $wp_admin_bar;
+		
+		$wp_admin_bar->remove_node( 'wp-logo' );
+		$wp_admin_bar->remove_node( 'view-site' );
+		$wp_admin_bar->remove_node( 'view-store' );
+	}
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	function plugin_check_missing() {
+		static $plugins = array(
+			array('type' => 'function', 'name' => 'A2A_SHARE_SAVE_init', 'desc' => 'AddToAny Share Buttons'),
+			array('type' => 'class', 'name' => 'woocommerce', 'desc' => 'WooCommerce'),
+			array('type' => 'define', 'name' => 'ALM_VERSION', 'desc' => 'Ajax Load More'),
+			array('type' => 'define', 'name' => 'WPCF7_VERSION', 'desc' => 'Contact From 7'),
+			array('type' => 'function', 'name' => 'CF7DBPlugin_noticePhpVersionWrong', 'desc' => 'Contact From DB'),
+			array('type' => 'define', 'name' => 'DLM_VERSION', 'desc' => 'Download Monitor'),
+			array('type' => 'class', 'name' => 'LazyLoad_Images', 'desc' => 'Lazy Load'),
+			array('type' => 'class', 'name' => 'Members_Plugin', 'desc' => '成员'),
+			array('type' => 'class', 'name' => 'C_NextGEN_Bootstrap', 'desc' => 'NextGEN 图库'),
+			array('type' => 'class', 'name' => 'Tinymce_Advanced', 'desc' => 'TinyMCE Advanced'),
+			array('type' => 'define', 'name' => 'WPSEO_VERSION', 'desc' => 'Yoast SEO'),
+			array('type' => 'class', 'name' => 'wp_slimstat', 'desc' => 'Slim Stat Analytics')
+		);
+
+		for ($i = 0; $i < sizeof($plugins); $i++) {
+			$have = false;
+
+			if ($plugins[$i]['type'] == 'class' && class_exists($plugins[$i]['name'])) {
+				$have = true;
+			}
+
+			if ($plugins[$i]['type'] == 'define' && defined($plugins[$i]['name'])) {
+				$have = true;
+			}
+
+			if ($plugins[$i]['type'] == 'function' && function_exists($plugins[$i]['name'])) {
+				$have = true;
+			}
+
+			if (!$have) {
+				?>	
+				<div class="message error"><p><?php printf(__("请先启用'%s'插件！"), $plugins[$i]['desc']); ?></p></div>
+				<?php
+			}
+		}
 	}
 	remove_action('admin_init', '_maybe_update_core');
 	remove_action('admin_init', '_maybe_update_plugins');
@@ -455,6 +503,8 @@
 	//add_action('wp_enqueue_scripts', 'customWp_replace_open_sans' );
 	//add_action('admin_enqueue_scripts', 'customWp_replace_open_sans');
 	add_action('admin_head', 'customWp_admin_css');
+	add_action('admin_bar_menu', 'remove_store', 999);
+    add_action('admin_notices', 'plugin_check_missing');
 	add_action('admin_menu','customWp_remove_my_post_metaboxes');
 	//add_action('admin_menu', 'customWp_all_settings_link');
 	add_action('init', 'customWp_disable_emojis' );
