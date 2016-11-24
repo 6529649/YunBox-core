@@ -452,6 +452,10 @@
 	function customWp_dashboard_widget_function() {
 		echo '关于云聪<br/>我们致立于为中小企业提供一站式外贸电商解决方案，专注于跨境电商平台效果提升。云聪在帮助中小企业在电商之路获得成功的同时不忘初心 —— "一帮人一起为社会做一件有意义的事情"。';
 	}
+	function customWp_remove_dashboard_widgets() {
+		global $wp_meta_boxes;
+		unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
+	}
 	function customWp_add_dashboard_widgets() {
 		wp_add_dashboard_widget('yunBox_dashboard_widget', '云聪智能全网营销平台', 'customWp_dashboard_widget_function');
 	}
@@ -573,6 +577,7 @@
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
 	add_action('admin_bar_menu', 'add_yc_logo', 1); //最后一个参数是菜单的位置
 	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
+	add_action('wp_dashboard_setup', 'customWp_remove_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
 	add_filter('admin_title', 'customWp_admin_title', 10, 2);
 	add_filter('automatic_updater_disabled', '__return_true');	// 彻底关闭自动更新
