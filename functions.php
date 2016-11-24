@@ -306,7 +306,6 @@
 	}
 
     // Custom WP
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	function customWp_replace_open_sans() {
 		wp_deregister_style('open-sans');
 		wp_register_style( 'open-sans', WL_TEMPLATE_DIR_URI.'/css/font-family.css');
@@ -460,7 +459,7 @@
 		wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/bar-menu.css' );
 	}
 	function customWp_plugin_check_missing() {
-		static $plugins = array(
+		$plugins = array(
 			array('type' => 'function', 'name' => 'A2A_SHARE_SAVE_init', 'desc' => 'AddToAny Share Buttons'),
 			array('type' => 'class', 'name' => 'woocommerce', 'desc' => 'WooCommerce'),
 			array('type' => 'define', 'name' => 'ALM_VERSION', 'desc' => 'Ajax Load More'),
