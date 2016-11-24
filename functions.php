@@ -312,6 +312,16 @@
 		wp_register_style( 'open-sans', WL_TEMPLATE_DIR_URI.'/css/font-family.css');
 		if(is_admin()) wp_enqueue_style( 'open-sans');
 	}
+
+	function add_yc_logo() {
+        global $wp_admin_bar;
+
+		$wp_admin_bar->add_menu( array(
+			'id'    => 'yc-logo',
+			'title' => "<img src='http://demo.site.yunclever.com/wp-content/themes/YunBox/custom_login/yunclever_logo_orange.png' style='height: 100%'></img>",
+			'href'  => self_admin_url( '' )
+		) );
+	}
     function customWp_admin_bar() {
         global $wp_admin_bar;
 		$wp_admin_bar->remove_node( 'wp-logo' );
@@ -562,6 +572,7 @@
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
 	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
+	add_action('admin_bar_menu', 'add_yc_logo', 1); //最后一个参数是菜单的位置
 	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
 	add_filter('admin_title', 'customWp_admin_title', 10, 2);
