@@ -430,15 +430,15 @@
 	function customWp_menu_order($menu_ord) { // 自定义排序WordPress后台管理菜单
 		if (!$menu_ord) return true;
 		return array(
-			'index.php', // “仪表盘”菜单
-			'edit.php?post_type=question', // 自定义文章类型的菜单
-			'edit-comments.php', //“评论”菜单
-			'upload.php', //“多媒体”菜单
-			'edit.php?post_type=cmp_slider', //自定义文章类型的菜单
-			'plugins.php', //“插件”菜单
-			'themes.php', //“主题”菜单
-			'edit.php?post_type=page', // “页面”菜单
-			'edit.php', // “文章”菜单
+			'index.php', 					// “仪表盘”菜单
+			'edit.php?post_type=question', 	// 自定义文章类型的菜单
+			'edit-comments.php', 			//“评论”菜单
+			'upload.php', 					//“多媒体”菜单
+			'edit.php?post_type=cmp_slider',//自定义文章类型的菜单
+			'plugins.php', 					//“插件”菜单
+			'themes.php', 					//“主题”菜单
+			'edit.php?post_type=page', 		// “页面”菜单
+			'edit.php', 					// “文章”菜单
 		);
 	}
 	function customWp_dashboard_widget_function() {
@@ -461,7 +461,7 @@
 			array('type' => 'class', 'name' => 'Members_Plugin', 'desc' => 'Members'),
 			array('type' => 'class', 'name' => 'Tinymce_Advanced', 'desc' => 'TinyMCE Advanced'),
 			array('type' => 'define', 'name' => 'WPSEO_VERSION', 'desc' => 'Yoast SEO'),
-			array('type' => 'class', 'name' => 'wp_slimstat', 'desc' => 'Slim Stat Analytics')
+			array('type' => 'class', 'name' => 'wp_slimstat', 'desc' => 'Slim Stat Analytics'),
 		);
 		for ($i = 0; $i < sizeof($plugins); $i++) {
 			$have = false;
