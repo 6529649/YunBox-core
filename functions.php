@@ -356,7 +356,6 @@
 	    remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');		// wordresss链入链接
 	    remove_meta_box('dashboard_plugins', 'dashboard', 'core');				// wordpress链入插件
 	    remove_meta_box('dashboard_quick_press', 'dashboard', 'core');			// wordpress快速发布
-	    remove_meta_box('yoast_db_widget', 'dashboard', 'core');			// wordpress快速发布
 	}
 	function customWp_all_settings_link() {// 显示所有设置菜单
 		add_options_page(__('All Settings'), __('All Settings'), 'administrator', 'options.php');
@@ -376,9 +375,9 @@
 	    return $wp_from_email;
 	}
 	function customWp_remove_cssjs_ver( $src ) { //移除 WordPress 加载的JS和CSS链接中的版本号
-		if( strpos( $src, 'ver='. get_bloginfo( 'version' ) ) )
-			$src = remove_query_arg( 'ver', $src );
-		return $src;
+		//if( strpos( $src, 'ver='. get_bloginfo( 'version' ) ) )
+		//$src = remove_query_arg( 'ver', $src );
+		return remove_query_arg( 'ver', $src );
 	}
 	function customWp_woocommerce_remove_related_products( $args ) {
 		return array();
@@ -481,9 +480,53 @@
 			}
 		}
 	}
+	function customWp_modify_jquery() {
+		if (!is_admin()) {
+			wp_deregister_script('jquery');
+			wp_register_script('jquery', 'http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js', false, '1.12.1');
+			wp_enqueue_script('jquery');
+		}
+	}
+	function customWp_canonical( $paged = true ) {
+	        $link = false;
+	        if ( is_front_page() ) {
+	                $link = home_url( '/' );
+	        } else if ( is_home() && "page" == get_option('show_on_front') ) {
+	                $link = get_permalink( get_option( 'page_for_posts' ) );
+	        } else if ( is_tax() || is_tag() || is_category() ) {
+	                $term = get_queried_object();
+	                $link = get_term_link( $term, $term->taxonomy );
+	        } else if ( is_post_type_archive() ) {
+	                $link = get_post_type_archive_link( get_post_type() );
+	        } else if ( is_author() ) {
+	                $link = get_author_posts_url( get_query_var('author'), get_query_var('author_name') );
+	        } else if ( is_single() ) {
+	                $link = get_permalink( $id );
+	        } else if ( is_archive() ) {
+	                if ( is_date() ) {
+	                        if ( is_day() ) {
+	                                $link = get_day_link( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
+	                        } else if ( is_month() ) {
+	                                $link = get_month_link( get_query_var('year'), get_query_var('monthnum') );
+	                        } else if ( is_year() ) {
+	                                $link = get_year_link( get_query_var('year') );
+	                        }
+	                }
+	        }
+	        if ( $paged && $link && get_query_var('paged') > 1 ) {
+	                global $wp_rewrite;
+	                if ( !$wp_rewrite->using_permalinks() ) {
+	                        $link = add_query_arg( 'paged', get_query_var('paged'), $link );
+	                } else {
+	                        $link = user_trailingslashit( trailingslashit( $link ) . trailingslashit( $wp_rewrite->pagination_base ) . get_query_var('paged'), 'archive' );
+	                }
+	        }
+	        echo '<link rel="canonical" href="'.$link.'"/>';
+	}
 	remove_action('admin_init', '_maybe_update_core');
 	remove_action('admin_init', '_maybe_update_plugins');
 	remove_action('admin_init', '_maybe_update_themes');
+	remove_action('admin_notices', 'update_nag', 3);
 	remove_action('load-plugins.php', 'wp_update_plugins');
 	remove_action('load-themes.php', 'wp_update_themes');
 	remove_action('load-update.php', 'wp_update_plugins');
@@ -491,12 +534,16 @@
 	remove_action('load-update-core.php', 'wp_update_plugins');
 	remove_action('load-update-core.php', 'wp_update_themes');
 	remove_action('welcome_panel', 'wp_welcome_panel');
-	remove_action('wp_head', 'feed_links_extra', 3);
-	remove_action('wp_head', 'rsd_link');
-	remove_action('wp_head', 'wlwmanifest_link');
-	remove_action('wp_head', 'index_rel_link');
-	remove_action('wp_head', 'start_post_rel_link', 10, 0);
-	remove_action('wp_head', 'wp_generator');
+    remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0 );//移除相邻文章的url
+	remove_action('wp_head', 'feed_links_extra', 3); 			//去除评论feed
+    remove_action('wp_head', 'feed_links', 2);					//去除文章feed
+	remove_action('wp_head', 'index_rel_link');					//移除当前页面的索引
+	remove_action('wp_head', 'parent_post_rel_link', 10, 0 );	//移除后面文章的url
+	remove_action('wp_head', 'rsd_link');						//针对Blog的远程离线编辑器接口
+	remove_action('wp_head', 'start_post_rel_link', 10, 0);		//移除最开始文章的url
+	remove_action('wp_head', 'wlwmanifest_link');				//Windows Live Writer接口
+	remove_action('wp_head', 'wp_generator');					// 移除版本号
+	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0 );	//自动生成的短链接
 	remove_action('init', 'wp_schedule_update_checks');	// 关闭更新检查定时作业
 	wp_clear_scheduled_hook('wp_version_check');		// 移除已有的版本检查定时作业
 	wp_clear_scheduled_hook('wp_update_plugins');		// 移除已有的插件更新定时作业
@@ -508,10 +555,12 @@
     add_action('admin_notices', 'customWp_plugin_check_missing');
 	add_action('admin_menu','customWp_remove_metaboxes');
 	//add_action('admin_menu', 'customWp_all_settings_link');
-	add_action('init', 'customWp_disable_emojis' );
-	add_action('init', 'customWp_replace_open_sans' );
+	add_action('init', 'customWp_modify_jquery');
+	add_action('init', 'customWp_disable_emojis');
+	add_action('init', 'customWp_replace_open_sans');
     add_action('login_head', 'customWp_login');
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
+	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
 	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
