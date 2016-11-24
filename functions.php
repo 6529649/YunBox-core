@@ -312,6 +312,16 @@
 		wp_register_style( 'open-sans', WL_TEMPLATE_DIR_URI.'/css/font-family.css');
 		if(is_admin()) wp_enqueue_style( 'open-sans');
 	}
+
+	function add_yc_logo() {
+        global $wp_admin_bar;
+
+		$wp_admin_bar->add_menu( array(
+			'id'    => 'yc-logo',
+			'title' => "<img src='http://demo.site.yunclever.com/wp-content/themes/YunBox/custom_login/yunclever_logo_orange.png' style='height: 100%'></img>",
+			'href'  => self_admin_url( '' )
+		) );
+	}
     function customWp_admin_bar() {
         global $wp_admin_bar;
 		$wp_admin_bar->remove_node( 'wp-logo' );
@@ -443,6 +453,10 @@
 	function customWp_dashboard_widget_function() {
 		echo '关于云聪<br/>我们致立于为中小企业提供一站式外贸电商解决方案，专注于跨境电商平台效果提升。云聪在帮助中小企业在电商之路获得成功的同时不忘初心 —— "一帮人一起为社会做一件有意义的事情"。';
 	}
+	function customWp_remove_dashboard_widgets() {
+		global $wp_meta_boxes;
+		unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
+	}
 	function customWp_add_dashboard_widgets() {
 		wp_add_dashboard_widget('yunBox_dashboard_widget', '云聪智能全网营销平台', 'customWp_dashboard_widget_function');
 	}
@@ -450,7 +464,7 @@
 		wp_enqueue_style( 'admin-css', get_template_directory_uri() .'/css/bar-menu.css' );
 	}
 	function customWp_plugin_check_missing() {
-		static $plugins = array(
+		$plugins = array(
 			array('type' => 'function', 'name' => 'A2A_SHARE_SAVE_init', 'desc' => 'AddToAny Share Buttons'),
 			array('type' => 'class', 'name' => 'woocommerce', 'desc' => 'WooCommerce'),
 			array('type' => 'define', 'name' => 'ALM_VERSION', 'desc' => 'Ajax Load More'),
@@ -562,7 +576,9 @@
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
 	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
+	add_action('admin_bar_menu', 'add_yc_logo', 1); //最后一个参数是菜单的位置
 	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
+	add_action('wp_dashboard_setup', 'customWp_remove_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
 	add_filter('admin_title', 'customWp_admin_title', 10, 2);
 	add_filter('automatic_updater_disabled', '__return_true');	// 彻底关闭自动更新
