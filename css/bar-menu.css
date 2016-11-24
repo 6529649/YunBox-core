@@ -113,6 +113,25 @@
 	background: #f1f1f1;
 	color: #33383c;
 }
-#adminmenu li.menu-top {
+#adminmenu a.wp-has-submenu {
 	padding: 14px;
+}
+#adminmenu a:hover,
+#adminmenu li.menu-top:hover,
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
+  color: #33383c;
+  background-color: #f1f1f1;
+}
+#adminmenu li:hover div.wp-menu-image:before,
+#adminmenu li a:focus div.wp-menu-image:before,
+#adminmenu li.opensub div.wp-menu-image:before {
+	color: #33383c;
+}
+/* flyout menu arrow */
+#adminmenu li.wp-has-submenu.wp-not-current-submenu:hover:after {
+	top: 24px;
+}
+#adminmenu .wp-submenu-head, #adminmenu a.menu-top {
+    padding: 14px;
 }
