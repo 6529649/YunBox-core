@@ -63,7 +63,7 @@
 }
 #wpadminbar .quicklinks .menupop.hover ul li div[tabindex]:hover {
 	background: #5e87b0;
-	color: #fff;	
+	color: #fff;
 }
 #wpadminbar #adminbarsearch:before {
     color: #ccc;
@@ -345,7 +345,19 @@
     }
 }
 
-
+/************************ YunBox ***********************/
+#dashboard-widgets-wrap div#yunBox_dashboard_widget.postbox {
+    border: 1px solid #f0ad4e;
+    border-radius: 5px;
+}
+#dashboard-widgets-wrap #yunBox_dashboard_widget span.toggle-indicator {
+    color: #fff;
+}
+#dashboard-widgets-wrap #yunBox_dashboard_widget h2.hndle {
+    color: #f1f1f1;
+    border-radius: 3px 3px 0px 0px;
+    background: #f0ad4e;
+}
 /************************ 浏览量 ***********************/
 
 #dashboard-widgets-wrap div#slim_p1_01.postbox {
@@ -449,10 +461,14 @@
     width: calc(50% - 40px);
 }
 
-#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
 	background: #f1f1f1;
 	color: #33383c;
 	padding: 14px;
+}
+.folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
+	background: #f1f1f1;
+	color: #33383c;
 }
 #adminmenu .current div.wp-menu-image:before, #adminmenu .wp-has-current-submenu div.wp-menu-image:before, #adminmenu a.current:hover div.wp-menu-image:before, #adminmenu a.wp-has-current-submenu:hover div.wp-menu-image:before, #adminmenu li.wp-has-current-submenu a:focus div.wp-menu-image:before, #adminmenu li.wp-has-current-submenu.opensub div.wp-menu-image:before, #adminmenu li.wp-has-current-submenu:hover div.wp-menu-image:before {
     color: #33383c;

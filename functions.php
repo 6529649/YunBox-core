@@ -304,23 +304,12 @@
     	</div>
     <?php
 	}
-
     // Custom WP
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	function customWp_replace_open_sans() {
 		wp_deregister_style('open-sans');
 		wp_register_style( 'open-sans', WL_TEMPLATE_DIR_URI.'/css/font-family.css');
 		if(is_admin()) wp_enqueue_style( 'open-sans');
-	}
-
-	function add_yc_logo() {
-        global $wp_admin_bar;
-
-		$wp_admin_bar->add_menu( array(
-			'id'    => 'yc-logo',
-			'title' => "<img src='http://demo.site.yunclever.com/wp-content/themes/YunBox/custom_login/yunclever_logo_orange.png' style='height: 100%'></img>",
-			'href'  => self_admin_url( '' )
-		) );
 	}
     function customWp_admin_bar() {
         global $wp_admin_bar;
@@ -334,6 +323,13 @@
 		$wp_admin_bar->remove_menu( 'comments' );
 		$wp_admin_bar->remove_menu( 'user-info' );
     }
+	function customWp_admin_bar_add_logo() {
+        global $wp_admin_bar;
+		$wp_admin_bar->add_menu( array(
+			'id'    => 'yc-logo',
+			'title' => '<img src="'.esc_url(get_template_directory_uri().'/images/logo-white.png').'" style="height: 100%"/>',
+		) );
+	}
     function customWp_footer_admin_change () {return '';}
 	function customWp_right_admin_footer_text($text) {
 		$text = "Version : 1.0.5";
@@ -345,7 +341,7 @@
         return $old_help;
     }
 	function customWp_remove_admin_stuff( $translated_text, $untranslated_text, $domain ) {
-		$custom_field_text = 'You are using <span class="b">WordPress %s</span>.';
+		$custom_field_text = 'Ver %s.';
 		if (!current_user_can( 'update_core') && is_admin() && $untranslated_text === $custom_field_text) {
 			return '';
 		}
@@ -366,6 +362,8 @@
 	    remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');		// wordresss链入链接
 	    remove_meta_box('dashboard_plugins', 'dashboard', 'core');				// wordpress链入插件
 	    remove_meta_box('dashboard_quick_press', 'dashboard', 'core');			// wordpress快速发布
+	    remove_meta_box('dashboard_activity', 'dashboard', 'core');				// 活动
+		remove_meta_box('postcustom' , 'post' , 'normal'); 						// 在文章编辑界面移除自定义字段模块
 	}
 	function customWp_all_settings_link() {// 显示所有设置菜单
 		add_options_page(__('All Settings'), __('All Settings'), 'administrator', 'options.php');
@@ -436,26 +434,8 @@
 			echo do_shortcode("[addtoany]");
 		}
 	}
-	function customWp_menu_order($menu_ord) { // 自定义排序WordPress后台管理菜单
-		if (!$menu_ord) return true;
-		return array(
-			'index.php', 					// “仪表盘”菜单
-			'edit.php?post_type=question', 	// 自定义文章类型的菜单
-			'edit-comments.php', 			//“评论”菜单
-			'upload.php', 					//“多媒体”菜单
-			'edit.php?post_type=cmp_slider',//自定义文章类型的菜单
-			'plugins.php', 					//“插件”菜单
-			'themes.php', 					//“主题”菜单
-			'edit.php?post_type=page', 		// “页面”菜单
-			'edit.php', 					// “文章”菜单
-		);
-	}
 	function customWp_dashboard_widget_function() {
 		echo '关于云聪<br/>我们致立于为中小企业提供一站式外贸电商解决方案，专注于跨境电商平台效果提升。云聪在帮助中小企业在电商之路获得成功的同时不忘初心 —— "一帮人一起为社会做一件有意义的事情"。';
-	}
-	function customWp_remove_dashboard_widgets() {
-		global $wp_meta_boxes;
-		unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
 	}
 	function customWp_add_dashboard_widgets() {
 		wp_add_dashboard_widget('yunBox_dashboard_widget', '云聪智能全网营销平台', 'customWp_dashboard_widget_function');
@@ -566,7 +546,8 @@
 	//add_action('wp_enqueue_scripts', 'customWp_replace_open_sans' );
 	//add_action('admin_enqueue_scripts', 'customWp_replace_open_sans');
 	add_action('admin_head', 'customWp_admin_css');
-    add_action('admin_notices', 'customWp_plugin_check_missing');
+    //add_action('admin_notices', 'customWp_plugin_check_missing');
+	add_action('admin_bar_menu', 'customWp_admin_bar_add_logo', 1); //最后一个参数是菜单的位置
 	add_action('admin_menu','customWp_remove_metaboxes');
 	//add_action('admin_menu', 'customWp_all_settings_link');
 	add_action('init', 'customWp_modify_jquery');
@@ -576,18 +557,14 @@
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
 	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
-	add_action('admin_bar_menu', 'add_yc_logo', 1); //最后一个参数是菜单的位置
 	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
-	add_action('wp_dashboard_setup', 'customWp_remove_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
 	add_filter('admin_title', 'customWp_admin_title', 10, 2);
 	add_filter('automatic_updater_disabled', '__return_true');	// 彻底关闭自动更新
     add_filter('contextual_help', 'customWp_screen_help_remove', 999, 3 );
-	//add_filter('custom_menu_order', 'customWp_menu_order');
 	add_filter('gettext', 'customWp_remove_admin_stuff', 20, 3);
 	add_filter('login_headertitle', 'customWp_login_title');
 	add_filter('media_row_actions', 'customWp_media_row_actions', 10, 2 );
-	//add_filter('menu_order', 'customWp_menu_order');
 	add_filter('manage_edit-product_columns', 'show_product_order',15 );
 	add_filter('post_mime_types', 'customWp_modify_post_mime_types' );
 	add_filter('pre_site_transient_update_core', '__return_null');
@@ -600,7 +577,7 @@
 	add_filter('wp_mail_from', 'customWp_email_from_email');
 	add_filter('wp_mail_from_name', 'customWp_email_from_name');
 	add_filter('wp_image_editors', 'customWp_change_graphic_lib' );
-	add_filter('woocommerce_related_products_args','customWp_woocommerce_remove_related_products', 10);
+	//add_filter('woocommerce_related_products_args','customWp_woocommerce_remove_related_products', 10);
 	add_filter('xmlrpc_enabled', '__return_false');
 	function smilies_reset() {
 		global $wpsmiliestrans, $wp_smiliessearch;
