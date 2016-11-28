@@ -926,6 +926,21 @@ function kadima_customizer( $wp_customize ) {
 		'section'    => 'footer_section',
 		'settings'   => 'kadima_options[info_mail]'
 	) );
+    $wp_customize->add_setting(
+	   'kadima_options[info_support]',
+		array(
+    		'default'=>esc_attr($wl_theme_options['info_support']),
+    		'type'=>'option',
+    		'capability'=>'edit_theme_options',
+    		'sanitize_callback'=>'kadima_sanitize_text',
+		)
+	);
+	$wp_customize->add_control( 'info_support', array(
+		'label'        => __( 'Power by', 'kadima' ),
+		'type'=>'url',
+		'section'    => 'footer_section',
+		'settings'   => 'kadima_options[info_support]'
+	) );
 }
 function kadima_sanitize_text( $input ) {
     return wp_kses_post( force_balance_tags( $input ) );

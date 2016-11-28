@@ -8,12 +8,11 @@
 	define('WL_TEMPLATE_DIR_CORE' , WL_TEMPLATE_DIR . '/core');
 	require( WL_TEMPLATE_DIR_CORE . '/menu/default_menu_walker.php' );
 	require( WL_TEMPLATE_DIR_CORE . '/menu/kadima_nav_walker.php' );
-	require( WL_TEMPLATE_DIR_CORE . '/scripts/css_js.php' ); //Enquiring Resources here
+	require( WL_TEMPLATE_DIR_CORE . '/scripts/css_js.php' );
 	require( WL_TEMPLATE_DIR_CORE . '/comment-function.php' );
 	require(dirname(__FILE__).'/customizer.php');
 	//Sane Defaults
-	function kadima_default_settings()
-    {
+	function kadima_default_settings() {
 	    $count12 = array('One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'TEN', 'ELEVEN', 'TWELVE');
     	$Image_silde =  esc_url(get_template_directory_uri() .'/images/1.png');
     	$Image_portfolio = esc_url(get_template_directory_uri() .'/images/portfolio1.png');
@@ -88,8 +87,7 @@
 	}
 	/*After Theme Setup*/
 	add_action( 'after_setup_theme', 'kadima_head_setup' );
-	function kadima_head_setup()
-	{
+	function kadima_head_setup() {
 		global $content_width;
 		//content width
 		if ( ! isset( $content_width ) ) $content_width = 550; //px
@@ -117,8 +115,7 @@
 		require( WL_TEMPLATE_DIR . '/options-reset.php'); //Reset Theme Options Here
 	}
 	// Read more tag to formatting in blog page
-	function kadima_content_more($more)
-	{
+	function kadima_content_more($more) {
 	   return '<div class="blog-post-details-item"><a class="kadima_blog_read_btn" href="'.get_permalink().'"><i class="fa fa-plus-circle"></i>"'.__('Read More', 'kadima' ).'"</a></div>';
 	}
 	add_filter( 'the_content_more_link', 'kadima_content_more' );
@@ -322,6 +319,45 @@
 		$wp_admin_bar->remove_menu( 'updates' );
 		$wp_admin_bar->remove_menu( 'comments' );
 		$wp_admin_bar->remove_menu( 'user-info' );
+		$wp_admin_bar->add_menu( array(
+			'id'    => 'menu-trans',
+			'title' => '<div>&nbsp;&nbsp;翻译工具&nbsp;&nbsp;</div>',
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'menu-trans',
+			'id'     => 'menu-trans-baidu',
+			'title'  => __( '百度翻译', 'kadima' ),
+			'href'   => 'http://fanyi.baidu.com/',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'menu-trans',
+			'id'     => 'menu-trans-youdao',
+			'title'  => __( '有道翻译', 'kadima' ),
+			'href'   => 'http://fanyi.youdao.com/',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'menu-trans',
+			'id'     => 'menu-trans-iciba',
+			'title'  => __( '金山词霸', 'kadima' ),
+			'href'   => 'http://fy.iciba.com/',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'menu-trans',
+			'id'     => 'menu-trans-bing',
+			'title'  => __( '必应在线翻译', 'kadima' ),
+			'href'   => 'http://www.bing.com/translator/',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'menu-trans',
+			'id'     => 'menu-trans-google',
+			'title'  => __( '谷歌翻译', 'kadima' ),
+			'href'   => 'https://translate.google.com/',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
     }
 	function customWp_admin_bar_add_logo() {
         global $wp_admin_bar;
@@ -332,7 +368,7 @@
 	}
     function customWp_footer_admin_change () {return '';}
 	function customWp_right_admin_footer_text($text) {
-		$text = "Version : 1.0.5";
+		$text = 'Power by 云聪智能全网营销平台 - Version : 1.0.5 Build 161128';
 		return $text;
 	}
     function customWp_screen_options_remove(){ return false;}
@@ -557,7 +593,7 @@
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
 	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
-	add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
+	//add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
     add_filter('admin_footer_text', 'customWp_footer_admin_change', 9999);
 	add_filter('admin_title', 'customWp_admin_title', 10, 2);
 	add_filter('automatic_updater_disabled', '__return_true');	// 彻底关闭自动更新
