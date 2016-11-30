@@ -12,6 +12,19 @@
 	require( WL_TEMPLATE_DIR_CORE . '/comment-function.php' );
 	require(dirname(__FILE__).'/customizer.php');
 	//Sane Defaults
+	
+	/**
+	 * 获取访问用户的语言
+	 */
+	function get_client_language(){
+		if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])){
+
+			preg_match("/([^,;]*)/", $_SERVER["HTTP_ACCEPT_LANGUAGE"], $array_languages);
+
+			return str_replace( "_", "-", strtolower( $array_languages[0] ) );
+		}
+		return 'xx'; 
+	}
 	function kadima_default_settings() {
 	    $count12 = array('One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'TEN', 'ELEVEN', 'TWELVE');
     	$Image_silde =  esc_url(get_template_directory_uri() .'/images/1.png');
@@ -358,6 +371,18 @@
 			'href'   => 'https://translate.google.com/',
 			'meta'   => array( 'target' => '_blank' ),
 		) );
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'page-edit',
+			'title'  => __( '网站编辑', 'kadima' ),
+			'href'   => admin_url( '/customize.php?return=%2Fwp-admin%2Ftheme-editor.php' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'page-overview',
+			'parent' => 'top-secondary',
+			'title'  => __( '预览', 'kadima' ),
+			'href'   => home_url(),
+		) );
+
     }
 	function customWp_admin_bar_add_logo() {
         global $wp_admin_bar;
