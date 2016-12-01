@@ -57,6 +57,8 @@
 			'info_tel' => __('', 'kadima' ),
 			'info_fax' => __('', 'kadima' ),
 			'info_mail'=> __('', 'kadima' ),
+			'info_support'=> __('', 'kadima' ),
+            		 //
 			'service_home'=>'1',
 			'home_service_heading' => __('', 'kadima' ),
 			'portfolio_home'=>'0',
@@ -425,12 +427,23 @@
 	    remove_meta_box('dashboard_quick_press', 'dashboard', 'core');			// wordpress快速发布
 	    remove_meta_box('dashboard_activity', 'dashboard', 'core');				// 活动
 		remove_meta_box('postcustom' , 'post' , 'normal'); 						// 在文章编辑界面移除自定义字段模块
+		remove_meta_box('wpseo-dashboard-overview', 'dashboard', 'core');		//
+	}
+	function customWp_rename_dashboard_widgets() {
+		global $wp_meta_boxes;
+		$wp_meta_boxes['dashboard']['normal']['core']['woocommerce_dashboard_status']['title'] = '电商数据统计';
+		$wp_meta_boxes['dashboard']['normal']['core']['woocommerce_dashboard_recent_reviews']['title'] = '最新产品评论';
 	}
 	function customWp_all_settings_link() {// 显示所有设置菜单
 		add_options_page(__('All Settings'), __('All Settings'), 'administrator', 'options.php');
 	}
 	function customWp_login() {
-        echo '<link rel="stylesheet" tyssspe="text/css" href="' . get_bloginfo('template_directory') . '/custom_login/custom_login.css" />';
+		$str = file_get_contents('http://cn.bing.com/HPImageArchive.aspx?idx=0&n=1');
+		if( preg_match("/<url>(.+?)<\/url>/ies",$str,$matches) ) {
+			$imgurl='http://cn.bing.com'.$matches[1];
+			echo'<style type="text/css">body{background: url('.$imgurl.');width:100%;height:100%;background-image:url('.$imgurl.');-moz-background-size: 100% 100%;-o-background-size: 100% 100%;-webkit-background-size: 100% 100%;background-size: 100% 100%;-moz-border-image: url('.$imgurl.') 0;background-repeat:no-repeat\9;background-image:none\9;}</style>';
+        }
+		echo '<link rel="stylesheet" tyssspe="text/css" href="' . get_bloginfo('template_directory') . '/custom_login/custom_login.css" />';
     }
 	function customWp_login_title() {
         return 'YunBox - 云聪智能全网营销平台';
@@ -578,6 +591,9 @@
 	        }
 	        echo '<link rel="canonical" href="'.$link.'"/>';
 	}
+	function customWp_theme_add_editor_styles() {
+		add_editor_style('style.css');
+	}
 	remove_action('admin_init', '_maybe_update_core');
 	remove_action('admin_init', '_maybe_update_plugins');
 	remove_action('admin_init', '_maybe_update_themes');
@@ -614,8 +630,10 @@
 	add_action('init', 'customWp_modify_jquery');
 	add_action('init', 'customWp_disable_emojis');
 	add_action('init', 'customWp_replace_open_sans');
+	add_action('init', 'customWp_theme_add_editor_styles');
     add_action('login_head', 'customWp_login');
 	add_action('manage_product_posts_custom_column', 'customWp_product_column', 10, 2 );
+	add_action('wp_dashboard_setup', 'customWp_rename_dashboard_widgets', 999);
 	add_action('wp_head', 'customWp_canonical');
 	add_action('wp_before_admin_bar_render', 'customWp_admin_bar', 0);
 	//add_action('wp_dashboard_setup', 'customWp_add_dashboard_widgets' );
