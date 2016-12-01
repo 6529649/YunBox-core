@@ -18,6 +18,22 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+
+<?php 
+	$language = get_client_language();
+	if ($language != 'zh-cn') {
+?>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+	}
+<?php
+	}
+?>
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <div>
 	<!-- Header Section -->
 	<div class="header_section" >
