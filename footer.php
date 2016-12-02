@@ -58,5 +58,18 @@
 <?php { echo esc_attr($wl_theme_options['custom_css']); } ?>
 </style>
 <?php wp_footer(); ?>
+<?php
+	$language = get_client_language();
+	if ($language != 'zh-cn') {
+		wp_enqueue_script('google-translate', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit','','',true);
+?>
+	<script type="text/javascript">
+		function googleTranslateElementInit() {
+			new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+		}
+	</script>
+<?php
+	}
+?>
 </body>
 </html>
