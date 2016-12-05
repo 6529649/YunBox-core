@@ -368,17 +368,17 @@
 			'meta'   => array( 'target' => '_blank' ),
 		) );
 		$wp_admin_bar->add_menu( array(
-			'id'     => 'menu-piwik',
-			'parent' => 'top-secondary',
-			'title'  => __( '云数据中心', 'kadima' ),
-			'href'   => 'http://dc.yunclever.com/piwik',
-			'meta'   => array( 'target' => '_blank' ),
-		) );
-		$wp_admin_bar->add_menu( array(
 			'id'     => 'menu-helpdocs',
 			'parent' => 'top-secondary',
 			'title'  => __( '帮助与文档', 'kadima' ),
 			'href'   => 'http://dc.yunclever.com/docs/?g=Doc&m=Index&a=index&tree=1',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'menu-piwik',
+			'parent' => 'top-secondary',
+			'title'  => __( '云数据中心', 'kadima' ),
+			'href'   => 'http://dc.yunclever.com/piwik',
 			'meta'   => array( 'target' => '_blank' ),
 		) );
     }
