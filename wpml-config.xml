@@ -30,7 +30,6 @@
 			<key name="info_fax" />
 			<key name="info_mail" />
 			<key name="home_service_heading" />
-
 			<key name="service_1_title" />
 			<key name="service_1_text" />
 			<key name="service_1_link" />
@@ -46,7 +45,6 @@
 			<key name="service_5_title" />
 			<key name="service_5_text" />
 			<key name="service_5_link" />
-
 			<key name="port_heading" />
 			<key name="port_1_title" />
 			<key name="port_1_link" />

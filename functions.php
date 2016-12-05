@@ -6,24 +6,17 @@
 	define('WL_TEMPLATE_DIR_URI', get_template_directory_uri());
 	define('WL_TEMPLATE_DIR', get_template_directory());
 	define('WL_TEMPLATE_DIR_CORE' , WL_TEMPLATE_DIR . '/core');
-	require( WL_TEMPLATE_DIR_CORE . '/menu/default_menu_walker.php' );
-	require( WL_TEMPLATE_DIR_CORE . '/menu/kadima_nav_walker.php' );
+	require( WL_TEMPLATE_DIR_CORE . '/menu/menu_nav_walker.php' );
 	require( WL_TEMPLATE_DIR_CORE . '/scripts/css_js.php' );
 	require( WL_TEMPLATE_DIR_CORE . '/comment-function.php' );
 	require(dirname(__FILE__).'/customizer.php');
-	//Sane Defaults
-	
-	/**
-	 * 获取访问用户的语言
-	 */
-	function get_client_language(){
+
+	function get_client_language(){ // 获取访问用户的语言
 		if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])){
-
 			preg_match("/([^,;]*)/", $_SERVER["HTTP_ACCEPT_LANGUAGE"], $array_languages);
-
 			return str_replace( "_", "-", strtolower( $array_languages[0] ) );
 		}
-		return 'xx'; 
+		return 'xx';
 	}
 	function kadima_default_settings() {
 	    $count12 = array('One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'TEN', 'ELEVEN', 'TWELVE');
@@ -57,8 +50,7 @@
 			'info_tel' => __('', 'kadima' ),
 			'info_fax' => __('', 'kadima' ),
 			'info_mail'=> __('', 'kadima' ),
-			'info_support'=> __('', 'kadima' ),
-            		 //
+			'info_support'=> __('<a href="http://www.yunclever.com" target="_blank">YunClever</a>', 'kadima' ),
 			'service_home'=>'1',
 			'home_service_heading' => __('', 'kadima' ),
 			'portfolio_home'=>'0',
@@ -100,7 +92,7 @@
             kadima_default_settings()
         );
 	}
-	/*After Theme Setup*/
+
 	add_action( 'after_setup_theme', 'kadima_head_setup' );
 	function kadima_head_setup() {
 		global $content_width;
@@ -139,10 +131,8 @@
        return '';
 	}
 	add_filter('excerpt_more', 'kadima_excerpt_more');
-	/*
-	* widget area
-	*/
-	add_action( 'widgets_init', 'kadima_widgets_init');
+
+	add_action( 'widgets_init', 'kadima_widgets_init'); // widget area
 	function kadima_widgets_init() {
     	/*sidebar*/
     	register_sidebar( array(
@@ -164,8 +154,7 @@
     		'after_title' => '</h3>',
     	) );
 	}
-	/* Breadcrumbs  */
-	function kadima_breadcrumbs() {
+	function kadima_breadcrumbs() { // 面包屑导航
         $delimiter = '';
         $home = __('Home', 'kadima' ); // text for the 'Home' link
         $before = '<li>'; // tag before the current crumb
@@ -243,8 +232,7 @@
         }
         echo '</ul>';
 	}
-	//PAGINATION
-	function kadima_pagination($pages = '', $range = 2) {
+	function kadima_pagination($pages = '', $range = 2) { //分页
         $showitems = ($range * 2)+1;
         global $paged;
         if(empty($paged)) $paged = 1;
@@ -274,10 +262,7 @@
             echo "</div></div>";
         }
     }
-	/*===================================================================================
-	* Add Author Links
-	* =================================================================================*/
-	function kadima_author_profile( $contactmethods ) {
+	function kadima_author_profile( $contactmethods ) { // Add Author Links
     	$contactmethods['youtube_profile'] = __('Youtube Profile URL','kadima');
     	$contactmethods['twitter_profile'] = __('Twitter Profile URL','kadima');
     	$contactmethods['facebook_profile'] = __('Facebook Profile URL','kadima');
@@ -285,10 +270,8 @@
     	return $contactmethods;
 	}
 	add_filter( 'user_contactmethods', 'kadima_author_profile', 10, 1);
-	/*===================================================================================
-	* Add Class Gravtar
-	* =================================================================================*/
-	add_filter('get_avatar','kadima_gravatar_class');
+
+	add_filter('get_avatar','kadima_gravatar_class'); // Add Class Gravtar
 	function kadima_gravatar_class($class) {
         $class = str_replace("class='avatar", "class='author_detail_img", $class);
         return $class;
@@ -375,16 +358,29 @@
 		) );
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'page-edit',
-			'title'  => __( '网站编辑', 'kadima' ),
-			'href'   => admin_url( '/customize.php?return=%2Fwp-admin%2Ftheme-editor.php' ),
+			'title'  => __( '可视化编辑', 'kadima' ),
+			'href'   => admin_url( '/customize.php?return=%2Fwp-admin%2Findex.php' ),
 		) );
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'page-overview',
-			'parent' => 'top-secondary',
-			'title'  => __( '预览', 'kadima' ),
+			'title'  => __( '预览前台', 'kadima' ),
 			'href'   => home_url(),
+			'meta'   => array( 'target' => '_blank' ),
 		) );
-
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'menu-piwik',
+			'parent' => 'top-secondary',
+			'title'  => __( '云数据中心', 'kadima' ),
+			'href'   => 'http://dc.yunclever.com/piwik',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'menu-helpdocs',
+			'parent' => 'top-secondary',
+			'title'  => __( '帮助与文档', 'kadima' ),
+			'href'   => 'http://dc.yunclever.com/docs/?g=Doc&m=Index&a=index&tree=1',
+			'meta'   => array( 'target' => '_blank' ),
+		) );
     }
 	function customWp_admin_bar_add_logo() {
         global $wp_admin_bar;
