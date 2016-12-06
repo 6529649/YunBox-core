@@ -507,12 +507,8 @@
     background-image: linear-gradient(to bottom, #31A3DD 50%, #31A3DD 50%) !important;
     background-color: #31A3DD;
 }
-.navbar-toggle {
-    background-color: #31A3DD !important;
-    border: 1px solid #31A3DD !important;
-}
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: #31A3DD !important;
+    background-color: #049CFD;
 }
 .kadima_blockquote_section blockquote {
     border-left: 5px solid #31A3DD;
@@ -796,9 +792,6 @@ h1, h2, h3, h4, h5, h6 {
     background-image: none;
     border: 1px solid #049CFD;
     border-radius: 4px;
-}
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: #049CFD;
 }
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;

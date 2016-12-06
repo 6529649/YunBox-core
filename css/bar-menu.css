@@ -2,6 +2,9 @@ body {
     background: #eaedf1;
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
 }
+#wpbody-content {
+    padding-bottom: 0px;
+}
 #wpadminbar {
     height: 50px;
     background: #0099cc;
