@@ -1,6 +1,29 @@
 body {
     background: #eaedf1;
-    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
+    font-family: Tahoma, STHeiti, "Microsoft YaHei";
+}
+.custom-submenu-center {
+    text-align: center;
+}
+#adminmenu .custom-submenu-center a:hover {
+    color: #b4b9be !important;
+    background: #293038 !important;
+    cursor: default;
+}
+.custom-submenu-head {
+    background-color: #0099cc;
+    width: 5px;
+    height: 27px;
+    float: left;
+    margin: -6px -12px;
+}
+.custom-submenu-head-icon {
+    float: right;
+    width: 16px;
+    height: 16px;
+    background-image: url(../images/bullet_arrow_down2.png);
+    background-repeat: no-repeat;
+    background-position: center 0px;
 }
 #wpbody-content {
     padding-bottom: 0px;
@@ -8,10 +31,10 @@ body {
 #wpadminbar {
     height: 50px;
     background: #0099cc;
-    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
+    font-family: Tahoma, STHeiti, "Microsoft YaHei";
 }
 #wpadminbar * {
-    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
+    font-family: Tahoma, STHeiti, "Microsoft YaHei";
 }
 #wpadminbar .quicklinks .ab-top-menu>li {
     background: #008fbf;
