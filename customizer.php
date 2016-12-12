@@ -601,7 +601,7 @@ function kadima_customizer( $wp_customize ) {
     		'settings'   => 'kadima_options[about_slide_'.$i.'_link]'
     	) );
 	}
-    /* Social options */
+	/* Social options */
 	$wp_customize->add_section('social_section',array(
     	'title'=>__("Social Options",'kadima'),
     	'panel'=>'kadima_theme_option',
