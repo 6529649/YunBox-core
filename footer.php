@@ -10,10 +10,11 @@
 			} else
 			{
 			$args = array(
-			'before_widget' => '<div class="col-md-3 col-sm-6 kadima_footer_widget_column">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<div class="kadima_footer_widget_title">',
-			'after_title'   => '<div class="kadima-footer-separator"></div></div>' );
+				'before_widget' => '<div class="col-md-3 col-sm-6 kadima_footer_widget_column">',
+				'after_widget'  => '</div>',
+				'before_title'  => '<div class="kadima_footer_widget_title">',
+				'after_title'   => '<div class="kadima-footer-separator"></div></div>'
+			);
 			the_widget('WP_Widget_Pages', null, $args);
 			} ?>
 		</div>

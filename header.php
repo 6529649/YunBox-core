@@ -15,10 +15,24 @@
 	<?php if($wl_theme_options['upload_image_favicon']!=''){ ?>
 	<link rel="shortcut icon" href="<?php  echo esc_url($wl_theme_options['upload_image_favicon']); ?>" />
 	<?php } ?>
-	<link rel="dns-prefetch" href="//cdn.yunclever.com">
-	<link rel="dns-prefetch" href="//cdn.bootcss.com">
-	<link rel="dns-prefetch" href="//use.typekit.net">
-	<link rel="dns-prefetch" href="//static.addtoany.com">
+	<?php
+		if (is_home()) {
+			echo '<meta http-equiv="x-dns-prefetch-control" content="on" />
+			<link rel="dns-prefetch" href="//cdn.yunclever.com">
+			<link rel="dns-prefetch" href="//cdn.bootcss.com">
+			<link rel="dns-prefetch" href="//use.typekit.net">
+			<link rel="dns-prefetch" href="//static.addtoany.com">';
+		} elseif (isset($_COOKIE['yc_visit_cookie'])) {
+			echo '';
+		}
+		else {
+			echo '<meta http-equiv="x-dns-prefetch-control" content="on" />
+			<link rel="dns-prefetch" href="//cdn.yunclever.com">
+			<link rel="dns-prefetch" href="//cdn.bootcss.com">
+			<link rel="dns-prefetch" href="//use.typekit.net">
+			<link rel="dns-prefetch" href="//static.addtoany.com">';
+		}
+	?>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
