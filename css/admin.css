@@ -98,6 +98,9 @@ body {
 #wpadminbar .ab-submenu {
     padding: 0px 0;
 }
+#wpfooter {
+    position: inherit !important;
+}
 /* flyout menu arrow */
 #adminmenu li.wp-has-submenu.wp-not-current-submenu:hover:after {
 	top: 24px;
