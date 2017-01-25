@@ -1,6 +1,6 @@
-body {
+﻿body {
     background: #eaedf1;
-    font-family: Tahoma, STHeiti, "Microsoft YaHei";
+    font-family: STHeiti, "Microsoft YaHei";
 }
 .custom-submenu-center {
     text-align: center;
@@ -61,6 +61,10 @@ body {
 }
 #adminmenu {
     margin: 0 0;
+}
+#wpadminbar.ie7 .menupop .ab-sub-wrapper,#wpadminbar.ie7 .shortlink-input{
+	top:0px;
+	left:0;
 }
 #collapse-menu:hover, #collapse-menu:hover #collapse-button div:after {
     color: #fff;
@@ -496,4 +500,30 @@ body {
     font-size: 15px;
     float: left;
     width: calc(50% - 40px);
+}
+
+.olsupport_side{position:fixed;display:none;width:54px;height:275px;right:0;top:214px;z-index:100;}
+.olsupport_side ul{ list-style:none; padding:0px; }
+.olsupport_side ul li{width:54px;height:54px;float:left;position:relative;}
+.olsupport_side ul li .sidebox{position:absolute;width:54px;height:54px;line-height:54px;top:0;right:0;transition:all 0.3s;background:#000;opacity:0.8;color:#fff; overflow:hidden;}
+.olsupport_side ul li .sidetop{width:54px;height:54px;line-height:54px;display:inline-block;background:#000;color:#fff;opacity:0.8;}
+.olsupport_side ul li i.fa{float:left;width:54px; height:54px; line-height:54px; text-align:center; font-size:28px; }
+.olsupport_side ul li .sidetop{
+	transition: background 0.5s,opacity 0.5s;
+	-moz-transition: background 0.5s,opacity 0.5s; /* Firefox 4 */
+	-webkit-transition: background 0.5s,opacity 0.5s; /* Safari 和 Chrome */
+	-o-transition: background 0.5s,opacity 0.5s; /* Opera */
+}
+.olsupport_side ul li .sidetop:hover{background:#f95e1a;opacity:1;}
+.olsupport_side ul li .sidebox{
+	transition: background 0.5s,opacity 0.5s,width 0.2s;
+	-moz-transition: background 0.5s,opacity 0.5s,width 0.2s; /* Firefox 4 */
+	-webkit-transition: background 0.5s,opacity 0.5s,width 0.2s; /* Safari 和 Chrome */
+	-o-transition: background 0.5s,opacity 0.5s,width 0.2s; /* Opera */
+}
+.olsupport_side ul li .sidebox:hover{ background:#f95e1a;opacity:1; width:115px; }
+.olsupport_side ul li.mq .sidebox:hover{ background:#f95e1a;opacity:1; width:122px; }
+.olsupport_side ul li.tel .sidebox:hover{ background:#f95e1a;opacity:1; width:152px; }
+@media (min-width: 768px) {
+	.olsupport_side{display:block;}
 }

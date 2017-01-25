@@ -20,7 +20,6 @@
 			echo '<meta http-equiv="x-dns-prefetch-control" content="on" />
 			<link rel="dns-prefetch" href="//cdn.yunclever.com">
 			<link rel="dns-prefetch" href="//cdn.bootcss.com">
-			<link rel="dns-prefetch" href="//use.typekit.net">
 			<link rel="dns-prefetch" href="//static.addtoany.com">';
 		} elseif (isset($_COOKIE['yc_visit_cookie'])) {
 			echo '';
@@ -29,7 +28,6 @@
 			echo '<meta http-equiv="x-dns-prefetch-control" content="on" />
 			<link rel="dns-prefetch" href="//cdn.yunclever.com">
 			<link rel="dns-prefetch" href="//cdn.bootcss.com">
-			<link rel="dns-prefetch" href="//use.typekit.net">
 			<link rel="dns-prefetch" href="//static.addtoany.com">';
 		}
 	?>

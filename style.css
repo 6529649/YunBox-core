@@ -1261,24 +1261,11 @@ p, .textwidget {
 .kadima_sidebar_widget_title h2 {
     margin: 0px;
     clear: both;
-    font: normal normal 18px Oswald;
     text-transform: uppercase;
     text-align: center;
     font-weight: normal;
     font-size: 22px;
     color: #fff;
-}
-.kadima_sidebar_blog_shadow {
-    background: url('./images/shadow.png') no-repeat top center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 80px;
-    z-index: 99;
-    width: 100%;
-    background-size: 100% 100%;
-    height: 25px;
-    bottom: 26px;
 }
 
 /* blog pagination */
