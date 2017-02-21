@@ -1,24 +1,23 @@
 <?php
 add_action( 'customize_register', 'kadima_customizer' );
 function kadima_customizer( $wp_customize ) {
-	wp_enqueue_style('customizr', WL_TEMPLATE_DIR_URI .'/css/customizr.css');
+	$wl_theme_options = kadima_get_options();
     $count12 = array('One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'TEN', 'ELEVEN', 'TWELVE');
 	/* Genral section */
 	$wp_customize->add_panel( 'kadima_theme_option', array(
-        'title' => __( 'Theme Options','kadima' ),
+        'title' => __( '主题设置','kadima' ),
         'priority' => 1, // Mixed with top-level-section hierarchy.
     ) );
     $wp_customize->add_section(
         'general_sec',
         array(
-            'title' => __( 'Theme General Options','kadima' ),
-            'description' => 'Here you can customize Your theme\'s general Settings',
+            'title' => __( '主题通用设置','kadima' ),
+            'description' => '',
 			'panel'=>'kadima_theme_option',
 			'capability'=>'edit_theme_options',
             'priority' => 35,
         )
     );
-	$wl_theme_options = kadima_get_options();
 	$wp_customize->add_setting(
 		'kadima_options[_frontpage]',
 		array(
@@ -29,7 +28,7 @@ function kadima_customizer( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_control( 'kadima_front_page', array(
-		'label'        => __( 'Show Front Page', 'kadima' ),
+		'label'        => __( '显示首页', 'kadima' ),
 		'type'=>'checkbox',
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[_frontpage]',
@@ -63,18 +62,18 @@ function kadima_customizer( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'kadima_upload_image_logo', array(
-		'label'        => __( 'Website Logo', 'kadima' ),
+		'label'        => __( '网站LOGO', 'kadima' ),
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[upload_image_logo]',
 	) ) );
 	$wp_customize->add_control( 'kadima_logo_height', array(
-		'label'        => __( 'Logo Height', 'kadima' ),
+		'label'        => __( 'Logo高度', 'kadima' ),
 		'type'=>'number',
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[height]',
 	) );
 	$wp_customize->add_control( 'kadima_logo_width', array(
-		'label'        => __( 'Logo Width', 'kadima' ),
+		'label'        => __( 'Logo宽度', 'kadima' ),
 		'type'=>'number',
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[width]',
@@ -89,7 +88,7 @@ function kadima_customizer( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'kadima_upload_image_favicon', array(
-		'label'        => __( 'Custom favicon', 'kadima' ),
+		'label'        => __( '自定义favicon', 'kadima' ),
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[upload_image_favicon]',
 	) ) );
@@ -103,7 +102,7 @@ function kadima_customizer( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_control( 'custom_css', array(
-		'label'        => __( 'Custom CSS', 'kadima' ),
+		'label'        => __( '自定义CSS', 'kadima' ),
 		'type'=>'textarea',
 		'section'    => 'general_sec',
 		'settings'   => 'kadima_options[custom_css]'
@@ -112,9 +111,9 @@ function kadima_customizer( $wp_customize ) {
 	$wp_customize->add_section(
         'slider_section',
         array(
-            'title' =>  __( 'Theme Slider Options','kadima' ),
+            'title' =>  __( 'Banner滚屏设置','kadima' ),
 			'panel'=>'kadima_theme_option',
-            'description' => 'Here you can add slider images',
+            'description' => '',
 			'capability'=>'edit_theme_options',
             'priority' => 35,
 			'active_callback' => 'is_front_page',
@@ -167,30 +166,30 @@ function kadima_customizer( $wp_customize ) {
     		)
     	);
         $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'kadima_slider_image_'.$i, array(
-    		'label'      => __( 'Slider Image '.$count12[$i-1], 'kadima' ),
+    		'label'      => __( '图片 '.$count12[$i-1], 'kadima' ),
     		'section'    => 'slider_section',
     		'settings'   => 'kadima_options[slide_image_'.$i.']'
     	) ) );
     	$wp_customize->add_control( 'slide_title_'.$i, array(
-    		'label'      => __( 'Slider Title '.$count12[$i-1], 'kadima' ),
+    		'label'      => __( '标题 '.$count12[$i-1], 'kadima' ),
     		'type'       => 'text',
     		'section'    => 'slider_section',
     		'settings'   => 'kadima_options[slide_title_'.$i.']'
     	) );
         $wp_customize->add_control( 'slide_desc_'.$i, array(
-    		'label'      => __( 'Slider Description '.$count12[$i-1], 'kadima' ),
+    		'label'      => __( '描述 '.$count12[$i-1], 'kadima' ),
     		'type'       => 'text',
     		'section'    => 'slider_section',
     		'settings'   => 'kadima_options[slide_desc_'.$i.']'
     	) );
         $wp_customize->add_control( 'slide_btn_'.$i, array(
-    		'label'      => __( 'Slider Button Text '.$count12[$i-1], 'kadima' ),
+    		'label'      => __( '按钮文字 '.$count12[$i-1], 'kadima' ),
     		'type'       => 'text',
     		'section'    => 'slider_section',
     		'settings'   => 'kadima_options[slide_btn_text_'.$i.']'
     	) );
         $wp_customize->add_control( 'slide_btnlink_'.$i, array(
-    		'label'      => __( 'Slider Button Link '.$count12[$i-1], 'kadima' ),
+    		'label'      => __( '按钮链接 '.$count12[$i-1], 'kadima' ),
     		'type'       => 'url',
     		'section'    => 'slider_section',
     		'settings'   => 'kadima_options[slide_btn_link_'.$i.']'
@@ -326,7 +325,161 @@ function kadima_customizer( $wp_customize ) {
     		'settings'   => 'kadima_options[service_link_'.$i.']'
     	) );
     }
-    /* Portfolio Section */
+	/* Custom Options */
+	for($ci=1;$ci<=5;$ci++){
+		$wp_customize->add_section(
+			'custom_section_'.$ci,
+			array(
+				'title'				=> __('自定义模块设置 '.$count12[$ci-1], 'kadima'),
+				'panel'				=> 'kadima_theme_option',
+				'capability'		=> 'edit_theme_options',
+				'priority' 			=> 35,
+				'active_callback' 	=> 'is_front_page',
+			)
+		);
+		$wp_customize->add_setting(
+			'kadima_options[custom_home_'.$ci.']',
+			array(
+				'type'    			=> 'option',
+				'default'			=> $wl_theme_options['custom_home_'.$ci],
+				'sanitize_callback'	=> 'kadima_sanitize_checkbox',
+				'capability' 		=> 'edit_theme_options'
+			)
+		);
+		$wp_customize->add_control(
+			'kadima_show_custom_'.$ci,
+			array(
+				'label'		=> __( '在首页启用该模块', 'kadima' ),
+				'type'		=> 'checkbox',
+				'section'	=> 'custom_section_'.$ci,
+				'settings'	=> 'kadima_options[custom_home_'.$ci.']'
+			)
+		);
+		$wp_customize->add_setting(
+		   'kadima_options[custom_title_'.$ci.']',
+			array(
+				'default'			=> esc_attr($wl_theme_options['custom_title_'.$ci]),
+				'type'				=> 'option',
+				'capability'		=> 'edit_theme_options',
+				'sanitize_callback'	=> 'kadima_sanitize_text',
+			)
+		);
+		$wp_customize->add_control(
+			'custom_title_'.$ci,
+			array(
+				'label'     => __( '首页模块名称 '.$ci, 'kadima' ),
+				'type'		=> 'text',
+				'section'   => 'custom_section_'.$ci,
+				'settings'  => 'kadima_options[custom_title_'.$ci.']'
+			)
+		);
+		for($i=1;$i<=12;$i++){
+			$wp_customize->add_setting(
+			   'kadima_options[custom_icons_'.$ci.'_'.$i.']',
+				array(
+					'default'			=> esc_attr($wl_theme_options['custom_icons_'.$ci.'_'.$i]),
+					'type'				=> 'option',
+					'capability'		=> 'edit_theme_options',
+					'sanitize_callback'	=> 'kadima_sanitize_text',
+				)
+			);
+			$wp_customize->add_setting(
+			   'kadima_options[custom_img_'$ci.'_'.$i.']',
+				array(
+					'default'			=>esc_attr($wl_theme_options['custom_img_'.$ci.'_'.$i]),
+					'type'				=>'option',
+					'capability'		=>'edit_theme_options',
+					'sanitize_callback'	=>'kadima_sanitize_text',
+				)
+			);
+			$wp_customize->add_setting(
+			   'kadima_options[custom_title_'.$ci.'_'.$i.']',
+				array(
+					'default'			=> esc_attr($wl_theme_options['custom_title_'.$ci.'_'.$i]),
+					'type'				=> 'option',
+					'capability'		=> 'edit_theme_options',
+					'sanitize_callback'	=> 'kadima_sanitize_text',
+				)
+			);
+			$wp_customize->add_setting(
+			   'kadima_options[custom_text_'.$ci.'_'.$i.']',
+				array(
+					'default'			=> esc_attr($wl_theme_options['custom_text_'.$ci.'_'$i]),
+					'type'				=> 'option',
+					'sanitize_callback'	=> 'kadima_sanitize_text',
+					'capability'		=> 'edit_theme_options',
+				)
+			);
+			$wp_customize->add_setting(
+			   'kadima_options[custom_link_'.$ci.'_'.$i.']',
+				array(
+					'default'			=> esc_attr($wl_theme_options['custom_link_'.$ci.'_'.$i]),
+					'type'				=> 'option',
+					'capability'		=> 'edit_theme_options',
+					'sanitize_callback'	=> 'esc_url_raw',
+				)
+			);
+			$wp_customize->add_control(
+				new kadima_Customize_Misc_Control(
+					$wp_customize,
+					'custom_options_'.$ci.'_'.$i.'-line',
+					array(
+						'section'  => 'custom_section_'.$ci,
+						'type'     => 'line'
+					)
+				)
+			);
+			$wp_customize->add_control(
+				'custom_title_'.$ci.'_'.$i,
+				array(
+					'label'     => __( '自定义模块 '.$count12[$ci-1].' 标题 '.$count12[$i-1], 'kadima' ),
+					'type'		=> 'text',
+					'section'   => 'custom_section_'.$ci,
+					'settings'  => 'kadima_options[custom_title_'.$ci.'_'.$i.']'
+				)
+			);
+			$wp_customize->add_control(
+				'kadima_options[custom_icons_'.$ci.'_'.$i.']',
+				array(
+					'label'        	=> __( '自定义模块 '.$count12[$ci-1].' 图标 '.$count12[$i-1], 'kadima' ),
+					'description'	=> __('','kadima'),
+					'section'  		=> 'custom_section_'.$ci,
+					'type'			=> 'text',
+					'settings'   	=> 'kadima_options[custom_icons_'.$ci.'_'.$i.']'
+				)
+			);
+			$wp_customize->add_control(
+				new WP_Customize_Image_Control(
+					$wp_customize,
+					'kadima_custom_img_'.$ci.'_'.$i,
+					array(
+						'label'      => __( '自定义模块 '.$count12[$ci-1].' 图片 '.$count12[$i-1], 'kadima' ),
+						'section'    => 'custom_section_'.$ci,
+						'settings'   => 'kadima_options[custom_img_'.$ci.'_'.$i.']'
+					)
+				)
+			);
+			$wp_customize->add_control(
+				'custom_text_'.$ci.'_'.$i,
+				array(
+					'label'     => __( '自定义模块 '.$count12[$ci-1].' 文字 '.$count12[$i-1], 'kadima' ),
+					'type'		=> 'text',
+					'section'   => 'custom_section_'.$ci,
+					'settings'  => 'kadima_options[custom_text_'.$ci.'_'.$i.']'
+				)
+			);
+			$wp_customize->add_control(
+				'custom_link_'.$ci.'_'.$i,
+					array(
+					'label'     => __( '自定义模块 '.$count12[$ci-1].' 链接 '.$count12[$i-1], 'kadima' ),
+					'type'		=> 'url',
+					'section'   => 'custom_section_'.$ci,
+					'settings'  => 'kadima_options[custom_link_'.$ci.'_'.$i.']'
+				)
+			);
+		}
+	}
+	/* Portfolio Section */
 	$wp_customize->add_section(
         'portfolio_section',
         array(
